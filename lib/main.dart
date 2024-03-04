@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/user/index_screen.dart';
-import 'package:hive/hive.dart';
 
 void main() async {
 
