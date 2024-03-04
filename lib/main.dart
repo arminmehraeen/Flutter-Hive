@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/home.dart';
+import 'package:flutter_hive/user/index_screen.dart';
 import 'package:hive/hive.dart';
 
 void main() async {
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
       ),
-      home: const HomeWidget()
+      home: const IndexScreen()
     );
   }
 }
