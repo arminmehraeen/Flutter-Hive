@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hive/user/user_model.dart';
+import 'package:flutter_hive/models/user_model.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key, this.user});
