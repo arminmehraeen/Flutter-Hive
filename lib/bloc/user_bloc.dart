@@ -14,9 +14,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final LazyBox<String> userBox ;
 
 
-
-
-
   UserBloc({required this.userBox}) : super(UserLoading()) {
 
     userBox.watch().listen((event) => add(LoadUsers())) ;
