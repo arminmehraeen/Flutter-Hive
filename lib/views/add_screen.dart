@@ -23,11 +23,13 @@ class _AddScreenState extends State<AddScreen> {
     super.initState();
   }
 
+  String get title => widget.user != null ? "Update User" : "New User" ;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.user != null ? "Update User" : "New User"),
+        title: Text(title),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -73,15 +75,20 @@ class _AddScreenState extends State<AddScreen> {
               ),
             ),
             const SizedBox(height: 10,),
-            ElevatedButton(onPressed: () {
-              if(_formKey.currentState!.validate()) {
-                String firstName = nameController.text ;
-                String lastName = familyController.text ;
-                Navigator.pop(context,[
-                  firstName,lastName
-                ]);
-              }
-            }, child: const Text("Save"))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ElevatedButton(onPressed: () {
+                  if(_formKey.currentState!.validate()) {
+                    String firstName = nameController.text ;
+                    String lastName = familyController.text ;
+                    Navigator.pop(context,[
+                      firstName,lastName
+                    ]);
+                  }
+                }, child: const Text("Save"))
+              ],
+            )
           ],
         )),
       ),
