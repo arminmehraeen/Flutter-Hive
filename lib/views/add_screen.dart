@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/user_model.dart';
+import 'package:flutter_hive/widgets/form_field_widget.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key, this.user});
@@ -54,70 +55,29 @@ class _AddScreenState extends State<AddScreen> {
             key: _formKey,
             child: Column(
           children: [
-            TextFormField(
-              controller: nameController,
-              validator: (value) {
-                if(value == null) {
-                  return "This field is required";
-                }
-
-                if(value.isEmpty) {
-                  return "This field is required";
-                }
-
-                return null ;
-              },
-              decoration: const InputDecoration(
-                labelText: "First name",
-                border: OutlineInputBorder()
-              ),
-            ),
+            FormFieldWidget(controller: nameController, label: "First Name"),
             Container(height: 10,),
-            TextFormField(
-              controller: familyController,
-              validator: (value) {
-                if(value == null) {
-                  return "This field is required";
-                }
-
-                if(value.isEmpty) {
-                  return "This field is required";
-                }
-
-                return null ;
-              },
-              decoration: const InputDecoration(
-                  labelText: "Last name",
-                  border: OutlineInputBorder()
-              ),
-            ),
+            FormFieldWidget(controller: familyController, label: "Last Name"),
             Container(height: 10,),
-            TextFormField(
-              controller: phoneController,
-              validator: (value) {
-                if(value == null) {
-                  return "This field is required";
-                }
-
-                if(value.isEmpty) {
-                  return "This field is required";
-                }
-
-                return null ;
-              },
-              decoration: const InputDecoration(
-                  labelText: "PhoneNumber",
-                  border: OutlineInputBorder()
-              ),
-            ),
-            const SizedBox(height: 10,),
+            FormFieldWidget(controller: phoneController, label: "Phone Number"),
+            const SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                ElevatedButton(onPressed: () => onValidationForm(), child: Text(isCreate ? "Save" : "Update")),
+                ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(15),
+                    ),
+                    icon: const Icon(Icons.save),
+                    onPressed: () => onValidationForm(), label: Text(isCreate ? "Save" : "Update")),
                 if(isCreate) ...[
                   const SizedBox(width: 5,),
-                  ElevatedButton(onPressed: () => Navigator.pop(context, UserModel.testUser().toMap()), child: const Text("Test User")),
+                  ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(15),
+                      ),
+                      icon: const Icon(Icons.person),
+                      onPressed: () => Navigator.pop(context, UserModel.testUser.toMap()), label: const Text("Test User")),
                 ]
               ],
             )
