@@ -10,6 +10,16 @@ class UserModel {
     required this.phoneNumber,
   });
 
+  static UserModel testUser() {
+    return const UserModel(
+      firstName: "Armin",
+      lastName: "Mehraein",
+      phoneNumber: "+98912345678"
+    ) ;
+  }
+
+  static List<UserModel> testUsers() => List.generate(10, (index) => testUser());
+
 
   @override
   String toString() {
@@ -32,5 +42,16 @@ class UserModel {
     );
   }
 
+  UserModel copyWith({
+    String? firstName,
+    String? lastName,
+    String? phoneNumber,
+  }) {
+    return UserModel(
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+    );
+  }
 
 }

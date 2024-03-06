@@ -19,7 +19,7 @@ class UserListItemWidget extends StatelessWidget {
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            IconButton(onPressed: () => onDelete() , icon: const Icon(Icons.close)),
+            IconButton(onPressed: () => onDelete() , icon: const Icon(Icons.close,size: 14,)),
           ],
         ),
         leading: const Icon(Icons.person),

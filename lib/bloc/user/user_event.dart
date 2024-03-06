@@ -10,6 +10,8 @@ class AddUser extends UserEvent {
   AddUser({required this.data} );
 }
 
+class AddUsers extends UserEvent {}
+
 class UpdateUser extends UserEvent {
   final Map<String, dynamic>? data ;
   final int index;

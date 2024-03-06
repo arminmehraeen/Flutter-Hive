@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 
@@ -31,6 +32,21 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         UserModel user = UserModel.fromMap(data) ;
         await userBox.putAt(event.index, json.encode(user.toMap())) ;
       }
+    });
+
+    Future<Map<dynamic,String>> addUserFromList(List<UserModel> users) async {
+      Map<dynamic,String> data = {} ;
+
+      for(var user in users) {
+        data[DateTime.now().toString()] = json.encode(user.toMap()) ;
+        await Future.delayed(const Duration(milliseconds: 1));
+      }
+
+      return data ;
+    }
+    
+    on<AddUsers>((event, emit) async {
+      userBox.putAll(await compute(addUserFromList, UserModel.testUsers()));
     });
 
     on<AddUser>((event, emit) async {
