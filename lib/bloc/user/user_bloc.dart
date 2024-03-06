@@ -24,7 +24,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     on<DeleteUser>((event, emit) => userBox.deleteAt(event.index));
 
-    on<DeleteUsers>((event, emit) => userBox.clear());
+    on<DeleteUsers>((event, emit) {
+
+     if(event.users.isEmpty) {
+       userBox.clear();
+     }else{
+       add(LoadUsers()) ;
+     }
+
+    });
 
     on<UpdateUser>((event, emit) async {
       var data = event.data ;
@@ -59,15 +67,22 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     });
 
     on<LoadUsers>((event, emit) async {
-      List<String> data = [] ;
-      for(var key in userBox.keys.toList()) {
-        String? value = await userBox.get(key) ;
-        if(value != null) {
-          data.add(value) ;
+
+      if(event.users == null) {
+
+        List<String> data = [] ;
+        for(var key in userBox.keys.toList()) {
+          String? value = await userBox.get(key) ;
+          if(value != null) {
+            data.add(value) ;
+          }
         }
+        List<UserModel> users = data.map((e) => UserModel.fromMap(json.decode(e))).toList() ;
+        emit(UserLoaded(users: users,isDeletedMode: false)) ;
+      }else {
+        bool isDeletedMode = event.users!.map((e) => e.selected).toList().where((element) => element).isNotEmpty;
+        emit(UserLoaded(users: event.users!,isDeletedMode: isDeletedMode)) ;
       }
-      List<UserModel> users = data.map((e) => UserModel.fromMap(json.decode(e))).toList() ;
-      emit(UserLoaded(users: users)) ;
     });
 
   }

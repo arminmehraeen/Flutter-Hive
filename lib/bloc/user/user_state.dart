@@ -8,6 +8,7 @@ class UserLoading extends UserState {}
 
 class UserLoaded extends UserState {
   final List<UserModel> users ;
-  UserLoaded({required this.users}) ;
+  final bool isDeletedMode ;
+  UserLoaded({required this.users,required this.isDeletedMode}) ;
 }
 

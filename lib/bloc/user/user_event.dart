@@ -3,7 +3,10 @@ part of 'user_bloc.dart';
 @immutable
 abstract class UserEvent {}
 
-class LoadUsers extends UserEvent {}
+class LoadUsers extends UserEvent {
+  final List<UserModel>? users ;
+  LoadUsers({this.users});
+}
 
 class AddUser extends UserEvent {
   final Map<String, dynamic>? data ;
@@ -23,6 +26,9 @@ class DeleteUser extends UserEvent {
   DeleteUser({required this.index}) ;
 }
 
-class DeleteUsers extends UserEvent {}
+class DeleteUsers extends UserEvent {
+  final List<UserModel> users ;
+  DeleteUsers({this.users = const []}) ;
+}
 
 class DisposeBox extends UserEvent {}

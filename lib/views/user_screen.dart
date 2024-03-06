@@ -61,6 +61,8 @@ class _UserScreenState extends State<UserScreen> {
           ) ,
           Expanded(child: BlocConsumer<UserBloc, UserState>(
             builder: (context, state) {
+
+
               if (state is UserLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -73,28 +75,33 @@ class _UserScreenState extends State<UserScreen> {
                   return const Center(
                     child: Text("No data found in database"),
                   );
+                }else {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                        shrinkWrap: false,
+                        itemCount: users.length,
+                        itemBuilder: (context, index) {
+                          return UserListItemWidget(
+                              onSelected: (user) {
+                                users[index] = user ;
+                                addAction(LoadUsers(users: users)) ;
+                              },
+                              user: users[index],
+                              onView: (user) async {
+                                var response = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddScreen(
+                                          user: user,
+                                        )));
+                                addAction(UpdateUser(data: response,index: index)) ;
+                              },
+                              onDelete: () => addAction(DeleteUser(index: index))
+                          );
+                        }),
+                  );
                 }
-
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView.builder(
-                      itemCount: users.length,
-                      itemBuilder: (context, index) {
-                        return UserListItemWidget(
-                            user: users[index],
-                            onView: (user) async {
-                              var response = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddScreen(
-                                        user: user,
-                                      )));
-                              addAction(UpdateUser(data: response,index: index)) ;
-                            },
-                            onDelete: () => addAction(DeleteUser(index: index))
-                        );
-                      }),
-                );
               }
               return Container();
             },
@@ -102,12 +109,23 @@ class _UserScreenState extends State<UserScreen> {
           )) ,
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            var response = await Navigator.push(context, MaterialPageRoute(builder: (context) => const AddScreen()));
-            addAction(AddUser(data: response)) ;
-          }
-      ,child: const Icon(Icons.add),),
+      floatingActionButton: BlocBuilder<UserBloc,UserState>(builder: (context, state) {
+
+        if(state is UserLoaded && state.isDeletedMode) {
+
+          return FloatingActionButton(
+              onPressed: () async {
+                addAction(DeleteUsers(users: state.users.where((element) => element.selected).toList())) ;
+              }
+              ,child: const Icon(Icons.delete)) ;
+        }
+        return FloatingActionButton(
+            onPressed: () async {
+              var response = await Navigator.push(context, MaterialPageRoute(builder: (context) => const AddScreen()));
+              addAction(AddUser(data: response)) ;
+            }
+            ,child: Icon(Icons.add)) ;
+      },)
     );
   }
 }
