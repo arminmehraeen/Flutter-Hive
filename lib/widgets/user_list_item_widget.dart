@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/user_model.dart';
 
 class UserListItemWidget extends StatelessWidget {
-  const UserListItemWidget({super.key, required this.data, required this.onDelete, required this.onView});
-  final String data ;
+
+  const UserListItemWidget({super.key, required this.user, required this.onDelete, required this.onView});
+
+  final UserModel user ;
   final Function() onDelete ;
   final Function(UserModel user) onView ;
+
   @override
   Widget build(BuildContext context) {
-
-    UserModel user = UserModel.fromMap(json.decode(data)) ;
 
     return Card(
       elevation: 5,
@@ -24,8 +25,8 @@ class UserListItemWidget extends StatelessWidget {
           ],
         ),
         leading: const Icon(Icons.person),
-        title: Text(user.firstName),
-        subtitle: Text(user.lastName),
+        title: Text("${user.firstName} ${user.lastName}"),
+        subtitle: Text(user.phoneNumber),
       ) ,
     );
   }

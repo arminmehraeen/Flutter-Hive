@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hive/bloc/user_bloc.dart';
+import 'package:flutter_hive/bloc/user/user_bloc.dart';
 import 'package:flutter_hive/locator.dart';
 import 'package:flutter_hive/views/user_screen.dart';
 

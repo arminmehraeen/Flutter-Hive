@@ -1,4 +1,4 @@
-import 'package:flutter_hive/bloc/user_bloc.dart';
+import 'package:flutter_hive/bloc/user/user_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 

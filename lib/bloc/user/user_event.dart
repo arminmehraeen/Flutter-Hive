@@ -6,12 +6,12 @@ abstract class UserEvent {}
 class LoadUsers extends UserEvent {}
 
 class AddUser extends UserEvent {
-  final List<String>? data ;
+  final Map<String, dynamic>? data ;
   AddUser({required this.data} );
 }
 
 class UpdateUser extends UserEvent {
-  final List<String>? data ;
+  final Map<String, dynamic>? data ;
   final int index;
   UpdateUser({required this.data,required this.index} );
 }

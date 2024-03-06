@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hive/bloc/user_bloc.dart';
+import 'package:flutter_hive/bloc/user/user_bloc.dart';
+
+import 'package:flutter_hive/models/user_model.dart';
 import 'package:flutter_hive/views/add_screen.dart';
 import 'package:flutter_hive/widgets/user_list_item_widget.dart';
 
+
+
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
-
   @override
   State<UserScreen> createState() => _UserScreenState();
 }
 
 class _UserScreenState extends State<UserScreen> {
+
   @override
   void initState() {
     super.initState();
@@ -51,9 +55,9 @@ class _UserScreenState extends State<UserScreen> {
             );
           }
           if (state is UserLoaded) {
-            List<String> data = state.data;
+            List<UserModel> users = state.users;
 
-            if (data.isEmpty) {
+            if (users.isEmpty) {
               return const Center(
                 child: Text("No data found in database"),
               );
@@ -62,10 +66,10 @@ class _UserScreenState extends State<UserScreen> {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.builder(
-                  itemCount: data.length,
+                  itemCount: users.length,
                   itemBuilder: (context, index) {
                     return UserListItemWidget(
-                      data: data[index],
+                      user: users[index],
                       onView: (user) async {
                         var response = await Navigator.push(
                             context,
