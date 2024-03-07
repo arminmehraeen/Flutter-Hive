@@ -24,14 +24,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     on<DeleteUser>((event, emit) => userBox.deleteAt(event.index));
 
-    on<DeleteUsers>((event, emit) {
+    on<DeleteUsers>((event, emit) async {
 
      if(event.users.isEmpty) {
        userBox.clear();
      }else{
-       add(LoadUsers()) ;
+       await userBox.deleteAll(event.users.map((e) => e.createdTime));
      }
-
     });
 
     on<UpdateUser>((event, emit) async {
@@ -46,7 +45,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       Map<dynamic,String> data = {} ;
 
       for(var user in users) {
-        data[DateTime.now().toString()] = json.encode(user.toMap()) ;
+        user = user.copyWith(createdTime: DateTime.now().toString());
+        data[user.createdTime] = json.encode(user.toMap()) ;
         await Future.delayed(const Duration(milliseconds: 1));
       }
 
@@ -58,11 +58,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     });
 
     on<AddUser>((event, emit) async {
-
       var data = event.data;
       if(data != null) {
         UserModel user = UserModel.fromMap(data) ;
-        await userBox.put(DateTime.now().toString(),json.encode(user.toMap())) ;
+        await userBox.put(user.createdTime,json.encode(user.toMap())) ;
       }
     });
 

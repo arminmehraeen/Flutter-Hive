@@ -11,18 +11,22 @@ class AddScreen extends StatefulWidget {
 
 class _AddScreenState extends State<AddScreen> {
 
+  final _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController() ;
   TextEditingController familyController = TextEditingController() ;
   TextEditingController phoneController = TextEditingController() ;
-  final _formKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
+  void setInitValue () {
     if(widget.user != null) {
       nameController.text = widget.user!.firstName ;
       familyController.text = widget.user!.lastName ;
       phoneController.text = widget.user!.phoneNumber ;
     }
+  }
+
+  @override
+  void initState() {
+    setInitValue() ;
     super.initState();
   }
 
@@ -34,6 +38,7 @@ class _AddScreenState extends State<AddScreen> {
         'firstName': nameController.text,
         'lastName': familyController.text,
         'phoneNumber': phoneController.text ,
+        'createdTime' : DateTime.now().toString()
       };
 
       Navigator.pop(context, data);

@@ -50,8 +50,8 @@ class _UserListItemWidgetState extends State<UserListItemWidget> {
               });
             },
             child: user.selected ? Icon(Icons.done,color: Theme.of(context).primaryColor) : const Icon(Icons.person)),
-        title: Text("${widget.user.firstName} ${widget.user.lastName}"),
-        subtitle: Text(widget.user.phoneNumber),
+        title: Text("${user.firstName} ${user.lastName}",style: TextStyle(color: user.selected ? Theme.of(context).primaryColor : null),),
+        subtitle: Text(user.phoneNumber),
       ) ,
     );
   }
