@@ -6,6 +6,8 @@ import 'package:flutter_hive/models/user_model.dart';
 import 'package:flutter_hive/views/add_screen.dart';
 import 'package:flutter_hive/widgets/user_list_item_widget.dart';
 
+import '../bloc/app_theme_cubit.dart';
+
 
 
 class UserScreen extends StatefulWidget {
@@ -34,6 +36,34 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BlocBuilder<UserBloc,UserState>(builder: (context, state) {
+
+          if(state is UserLoaded && state.isDeletedMode) {
+            return IconButton(onPressed: () => addAction(LoadUsers()), icon: const Icon(Icons.arrow_back));
+          }
+
+          return Container() ;
+        },),
+        actions: [
+          BlocBuilder<AppThemeCubit,AppThemeState>(builder: (context, state) {
+            return InkWell(
+              onTap: () {
+                context.read<AppThemeCubit>().changeColor(state.color) ;
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white,width: 1),
+                    shape: BoxShape.circle,
+                    color:state.color
+                ),
+              ),
+            );
+          },)
+        ],
+        centerTitle: true,
         title: const Text("Users"),
       ),
       body: Column(
@@ -124,7 +154,7 @@ class _UserScreenState extends State<UserScreen> {
               var response = await Navigator.push(context, MaterialPageRoute(builder: (context) => const AddScreen()));
               addAction(AddUser(data: response)) ;
             }
-            ,child: Icon(Icons.add)) ;
+            ,child: const Icon(Icons.add)) ;
       },)
     );
   }
