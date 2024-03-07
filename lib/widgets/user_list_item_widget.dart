@@ -20,8 +20,8 @@ class _UserListItemWidgetState extends State<UserListItemWidget> {
 
   @override
   void initState() {
-    user = widget.user ;
     super.initState();
+    user = widget.user ;
   }
 
   @override
@@ -32,27 +32,31 @@ class _UserListItemWidgetState extends State<UserListItemWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    bool selected = user.selected ;
+    Color color = Theme.of(context).primaryColor ;
+
     return Card(
       elevation: 5,
       child: ListTile(
-        onTap: () => widget.onView(widget.user) ,
+        onTap: () => widget.onView(widget.user),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            IconButton(onPressed: () => widget.onDelete() , icon: const Icon(Icons.close,size: 14,)),
+            IconButton(onPressed: () => widget.onDelete() , icon: const Icon(Icons.close,size: 14)),
           ],
         ),
         leading: GestureDetector(
             onTap: () {
               setState(() {
-                user = user.copyWith(selected: !user.selected) ;
+                user = user.copyWith(selected: !selected ) ;
                 widget.onSelected(user);
               });
             },
-            child: user.selected ? Icon(Icons.done,color: Theme.of(context).primaryColor) : const Icon(Icons.person)),
-        title: Text("${user.firstName} ${user.lastName}",style: TextStyle(color: user.selected ? Theme.of(context).primaryColor : null),),
+            child: Icon(selected ? Icons.done : Icons.person ,color: selected ? color : null)),
+        title: Text("${user.firstName} ${user.lastName}",style: TextStyle(color: user.selected ? color : null)),
         subtitle: Text(user.phoneNumber),
-      ) ,
+      ),
     );
   }
 }
