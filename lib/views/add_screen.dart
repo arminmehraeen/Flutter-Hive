@@ -16,34 +16,24 @@ class _AddScreenState extends State<AddScreen> {
   TextEditingController familyController = TextEditingController() ;
   TextEditingController phoneController = TextEditingController() ;
 
-  void setInitValue () {
-    if(widget.user != null) {
-      nameController.text = widget.user!.firstName ;
-      familyController.text = widget.user!.lastName ;
-      phoneController.text = widget.user!.phoneNumber ;
-    }
-  }
-
   @override
   void initState() {
-    setInitValue() ;
     super.initState();
+
+    if(widget.user != null) {
+      UserModel user = widget.user! ;
+      nameController.text = user.firstName ;
+      familyController.text = user.lastName ;
+      phoneController.text = user.phoneNumber ;
+    }
+
   }
 
   onValidationForm() {
-
     if(_formKey.currentState!.validate()) {
-
-      Map<String,dynamic> data = {
-        'firstName': nameController.text,
-        'lastName': familyController.text,
-        'phoneNumber': phoneController.text ,
-        'createdTime' : DateTime.now().toString()
-      };
-
-      Navigator.pop(context, data);
+      UserModel userModel = UserModel(firstName: nameController.text, lastName: familyController.text, phoneNumber: phoneController.text, createdTime: DateTime.now().toString()) ;
+      Navigator.pop(context, userModel.toMap());
     }
-
   }
 
   bool get isCreate => widget.user == null ;

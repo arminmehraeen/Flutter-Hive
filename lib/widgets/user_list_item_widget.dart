@@ -40,12 +40,7 @@ class _UserListItemWidgetState extends State<UserListItemWidget> {
       elevation: 5,
       child: ListTile(
         onTap: () => widget.onView(widget.user),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(onPressed: () => widget.onDelete() , icon: const Icon(Icons.close,size: 14)),
-          ],
-        ),
+        trailing: IconButton(onPressed: () => widget.onDelete() , icon: const Icon(Icons.close,size: 14)),
         leading: GestureDetector(
             onTap: () {
               setState(() {

@@ -8,9 +8,6 @@ class AppThemeCubit extends Cubit<AppThemeState> {
   AppThemeCubit() : super(const AppThemeState(color: Colors.green));
 
   void changeColor(MaterialColor color) {
-    List<MaterialColor> colors = Constants.colors ;
-    colors.shuffle();
-
-    emit(AppThemeState(color: colors.first));
+    emit(AppThemeState(color: color));
   }
 }
