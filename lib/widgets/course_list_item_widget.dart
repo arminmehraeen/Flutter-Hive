@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/course_model.dart';
-import 'package:flutter_hive/models/user_model.dart';
 
 class CourseListItemWidget extends StatefulWidget {
 

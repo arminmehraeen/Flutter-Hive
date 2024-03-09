@@ -4,7 +4,7 @@ import 'package:flutter_hive/bloc/course/course_bloc.dart';
 import 'package:flutter_hive/bloc/user/user_bloc.dart';
 import 'package:flutter_hive/locator.dart';
 import 'package:flutter_hive/views/home_screen.dart';
-import 'package:flutter_hive/views/user/user_screen.dart';
+
 
 import 'bloc/app_theme_cubit.dart';
 
