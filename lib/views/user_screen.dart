@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hive/bloc/app_theme_cubit.dart';
 import 'package:flutter_hive/bloc/user/user_bloc.dart';
-import 'package:flutter_hive/constants.dart';
-
 import 'package:flutter_hive/models/user_model.dart';
 import 'package:flutter_hive/views/add_screen.dart';
+import 'package:flutter_hive/widgets/brightness_widget.dart';
+import 'package:flutter_hive/widgets/empty_widget.dart';
+import 'package:flutter_hive/widgets/theme_widget.dart';
 import 'package:flutter_hive/widgets/user_list_item_widget.dart';
-
-import '../bloc/app_theme_cubit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -46,56 +47,9 @@ class _UserScreenState extends State<UserScreen> {
               return Container();
             },
           ),
-          actions: [
-            BlocBuilder<AppThemeCubit,AppThemeState>(builder: (context, state) => PopupMenuButton<MaterialColor>(
-                itemBuilder: (context) {
-                  return Constants.colors
-                      .map((e) => PopupMenuItem<MaterialColor>(
-                    value: e,
-                    child: Center(
-                        child: Icon(
-                          Icons.circle,
-                          color: e,
-                        )),
-                  ))
-                      .toList();
-                },
-                onSelected: (value) => context.read<AppThemeCubit>().changeColor(color: value) ,
-                constraints: const BoxConstraints(
-                  maxWidth: 60,
-                ),
-                position: PopupMenuPosition.under,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-
-                      const Icon(Icons.color_lens_outlined),
-                      // const SizedBox(width: 10,),
-                      // Container(
-                      //   width: 20,
-                      //   height: 20,
-                      //   decoration: BoxDecoration(
-                      //     border: Border.all(
-                      //       color: Colors.white,
-                      //       width: 1
-                      //     ),
-                      //     color: state.color,
-                      //     shape: BoxShape.circle
-                      //   ),
-                      // )
-                    ],
-                  ),
-                )),),
-            BlocBuilder<AppThemeCubit,AppThemeState>(builder: (context, state) {
-
-              bool isDark = state.brightness == Brightness.dark ;
-
-              return IconButton(onPressed: () =>
-                  context.read<AppThemeCubit>().changeColor(brightness: isDark ? Brightness.light : Brightness.dark) , icon: Icon(isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined));
-            },),
+          actions: const [
+             ThemeWidget() ,
+             BrightnessWidget()
           ],
           centerTitle: true,
           title: const Text("Users"),
@@ -140,9 +94,7 @@ class _UserScreenState extends State<UserScreen> {
                   List<UserModel> users = state.users;
 
                   if (users.isEmpty) {
-                    return const Center(
-                      child: Text("No data found in database"),
-                    );
+                    return const EmptyWidget();
                   } else {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
