@@ -60,7 +60,7 @@ class _UserScreenState extends State<UserScreen> {
                   ))
                       .toList();
                 },
-                onSelected: (value) => context.read<AppThemeCubit>().changeColor(value) ,
+                onSelected: (value) => context.read<AppThemeCubit>().changeColor(color: value) ,
                 constraints: const BoxConstraints(
                   maxWidth: 60,
                 ),
@@ -73,23 +73,29 @@ class _UserScreenState extends State<UserScreen> {
                     children: [
 
                       const Icon(Icons.color_lens_outlined),
-                      const SizedBox(width: 10,),
-                      Container(
-                        width: 20,
-                        height: 20,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white,
-                            width: 1
-                          ),
-                          color: state.color,
-                          shape: BoxShape.circle
-                        ),
-                      )
+                      // const SizedBox(width: 10,),
+                      // Container(
+                      //   width: 20,
+                      //   height: 20,
+                      //   decoration: BoxDecoration(
+                      //     border: Border.all(
+                      //       color: Colors.white,
+                      //       width: 1
+                      //     ),
+                      //     color: state.color,
+                      //     shape: BoxShape.circle
+                      //   ),
+                      // )
                     ],
                   ),
                 )),),
+            BlocBuilder<AppThemeCubit,AppThemeState>(builder: (context, state) {
 
+              bool isDark = state.brightness == Brightness.dark ;
+
+              return IconButton(onPressed: () =>
+                  context.read<AppThemeCubit>().changeColor(brightness: isDark ? Brightness.light : Brightness.dark) , icon: Icon(isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined));
+            },),
           ],
           centerTitle: true,
           title: const Text("Users"),
