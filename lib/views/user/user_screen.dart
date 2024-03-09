@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hive/bloc/user/user_bloc.dart';
 import 'package:flutter_hive/models/user_model.dart';
-import 'package:flutter_hive/views/add_screen.dart';
+import 'package:flutter_hive/views/user/add_user_screen.dart';
+
 import 'package:flutter_hive/widgets/brightness_widget.dart';
 import 'package:flutter_hive/widgets/empty_widget.dart';
 import 'package:flutter_hive/widgets/theme_widget.dart';
@@ -20,12 +21,6 @@ class _UserScreenState extends State<UserScreen> {
   void initState() {
     super.initState();
     context.read<UserBloc>().add(LoadUsers());
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    context.read<UserBloc>().add(DisposeBox());
   }
 
   void addAction(UserEvent userEvent) =>
@@ -110,7 +105,7 @@ class _UserScreenState extends State<UserScreen> {
                                   var response = await Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => AddScreen(
+                                          builder: (context) => AddUserScreen(
                                                 user: user,
                                               )));
                                   addAction(
@@ -145,7 +140,7 @@ class _UserScreenState extends State<UserScreen> {
                   var response = await Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const AddScreen()));
+                          builder: (context) => const AddUserScreen()));
                   addAction(AddUser(data: response));
                 },
                 child: const Icon(Icons.add));

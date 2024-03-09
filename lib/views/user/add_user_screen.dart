@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/user_model.dart';
 import 'package:flutter_hive/widgets/form_field_widget.dart';
 
-class AddScreen extends StatefulWidget {
-  const AddScreen({super.key, this.user});
+class AddUserScreen extends StatefulWidget {
+  const AddUserScreen({super.key, this.user});
   final UserModel? user ;
   @override
-  State<AddScreen> createState() => _AddScreenState();
+  State<AddUserScreen> createState() => _AddUserScreenState();
 }
 
-class _AddScreenState extends State<AddScreen> {
+class _AddUserScreenState extends State<AddUserScreen> {
 
   final _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController() ;

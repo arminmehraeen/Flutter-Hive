@@ -14,6 +14,8 @@ class UserModel {
     this.selected = false,
   });
 
+
+  static List<UserModel> testUsers() => List.generate(5, (index) => testUser);
   static  UserModel get testUser => UserModel(
       firstName: "Armin",
       lastName: "Mehraein",
@@ -22,7 +24,7 @@ class UserModel {
       createdTime: DateTime.now().toString()
   ) ;
 
-  static List<UserModel> testUsers() => List.generate(5, (index) => testUser);
+
 
   Map<String, dynamic> toMap() => {
     'firstName': firstName,
@@ -31,6 +33,8 @@ class UserModel {
     'createdTime': createdTime,
     'selected': selected,
   };
+
+
 
   factory UserModel.fromMap(Map<String, dynamic> map) => UserModel(
     firstName: map['firstName'] as String,
