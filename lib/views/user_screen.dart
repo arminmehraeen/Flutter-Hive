@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hive/bloc/app_theme_cubit.dart';
 import 'package:flutter_hive/bloc/user/user_bloc.dart';
 import 'package:flutter_hive/models/user_model.dart';
 import 'package:flutter_hive/views/add_screen.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_hive/widgets/brightness_widget.dart';
 import 'package:flutter_hive/widgets/empty_widget.dart';
 import 'package:flutter_hive/widgets/theme_widget.dart';
 import 'package:flutter_hive/widgets/user_list_item_widget.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
