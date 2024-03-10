@@ -48,7 +48,7 @@ class _CourseListItemWidgetState extends State<CourseListItemWidget> {
                 widget.onSelected(course);
               });
             },
-            child: Icon(selected ? Icons.done : Icons.book_outlined ,color: selected ? color : null)),
+            child: Icon(selected ? Icons.done : Icons.book_outlined ,color: selected ? color : null)) ,
         title: Text(course.name,style: TextStyle(color: selected ? color : null)),
         subtitle: Text("Size: ${course.size}"),
       ),

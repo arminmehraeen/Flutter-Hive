@@ -25,7 +25,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<DeleteUser>((event, emit) => userBox.deleteAt(event.index));
 
     on<DeleteUsers>((event, emit) async {
-
      if(event.users.isEmpty) {
        userBox.clear();
      }else{
@@ -43,19 +42,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     Future<Map<dynamic,String>> addUserFromList(List<UserModel> users) async {
       Map<dynamic,String> data = {} ;
-
       for(var user in users) {
         user = user.copyWith(createdTime: DateTime.now().toString());
         data[user.createdTime] = json.encode(user.toMap()) ;
         await Future.delayed(const Duration(milliseconds: 1));
       }
-
       return data ;
     }
     
-    on<AddUsers>((event, emit) async {
-      userBox.putAll(await compute(addUserFromList, UserModel.testUsers()));
-    });
+    on<AddUsers>((event, emit) async => userBox.putAll(await compute(addUserFromList, UserModel.testUsers())));
 
     on<AddUser>((event, emit) async {
       var data = event.data;
@@ -66,9 +61,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     });
 
     on<LoadUsers>((event, emit) async {
-
       if(event.users == null) {
-
         List<String> data = [] ;
         for(var key in userBox.keys.toList()) {
           String? value = await userBox.get(key) ;

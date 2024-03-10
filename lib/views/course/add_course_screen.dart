@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hive/models/course_model.dart';
-import 'package:flutter_hive/models/user_model.dart';
 import 'package:flutter_hive/widgets/form_field_widget.dart';
 
 class AddCourseScreen extends StatefulWidget {
@@ -19,13 +18,11 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
   @override
   void initState() {
     super.initState();
-
     if(widget.course != null) {
       CourseModel course = widget.course! ;
       nameController.text = course.name ;
       sizeController.text = course.size.toString() ;
     }
-
   }
 
   onValidationForm() {
@@ -49,10 +46,10 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
             key: _formKey,
             child: Column(
               children: [
-                FormFieldWidget(controller: nameController, label: "Name"),
-                Container(height: 10,),
-                FormFieldWidget(controller: sizeController, label: "Size"),
-                const SizedBox(height: 20,),
+                FormFieldWidget(controller: nameController,label:"Name")  ,
+                Container(height: 15),
+                FormFieldWidget(controller: sizeController,label: "Size") ,
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -63,13 +60,13 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                         icon: const Icon(Icons.save),
                         onPressed: () => onValidationForm(), label: Text(isCreate ? "Save" : "Update")),
                     if(isCreate) ...[
-                      const SizedBox(width: 5,),
+                      const SizedBox(width: 5),
                       ElevatedButton.icon(
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.all(15),
                           ),
                           icon: const Icon(Icons.person),
-                          onPressed: () => Navigator.pop(context, UserModel.testUser.toMap()), label: const Text("Test Course")),
+                          onPressed: () => Navigator.pop(context, CourseModel.testCourse.toMap()), label: const Text("Test Course")),
                     ]
                   ],
                 )

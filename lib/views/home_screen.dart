@@ -13,11 +13,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-
   final List<AppBarModel> data = [
     const AppBarModel(label: "Users", iconData: Icons.person_outline, body: UserScreen()) ,
     const AppBarModel(label: "Courses", iconData: Icons.book_outlined, body: CourseScreen()) ,
-  ] ;
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: const [ThemeWidget(), BrightnessWidget()],
             title: const Text("Flutter Hive"),
           ),
-          body: TabBarView(
-            children: data.map((e) => e.body).toList()
-          ),
+          body: TabBarView(children: data.map((e) => e.body).toList()),
         ));
   }
 }

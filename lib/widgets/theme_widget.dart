@@ -10,18 +10,16 @@ class ThemeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<MaterialColor>(
-        itemBuilder: (context) {
-          return Constants.colors
-              .map((e) => PopupMenuItem<MaterialColor>(
-            value: e,
-            child: Center(
-                child: Icon(
-                  Icons.circle,
-                  color: e,
-                )),
-          ))
-              .toList();
-        },
+        itemBuilder: (context) => Constants.colors
+            .map((e) => PopupMenuItem<MaterialColor>(
+          value: e,
+          child: Center(
+              child: Icon(
+                Icons.circle,
+                color: e,
+              )),
+        ))
+            .toList(),
         onSelected: (value) => context.read<AppThemeCubit>().changeColor(color: value) ,
         constraints: const BoxConstraints(
           maxWidth: 60,

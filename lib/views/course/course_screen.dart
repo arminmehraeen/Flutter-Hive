@@ -4,19 +4,17 @@ import 'package:flutter_hive/bloc/course/course_bloc.dart';
 import 'package:flutter_hive/models/course_model.dart';
 import 'package:flutter_hive/views/course/add_course_screen.dart';
 
-import 'package:flutter_hive/widgets/brightness_widget.dart';
 import 'package:flutter_hive/widgets/course_list_item_widget.dart';
 import 'package:flutter_hive/widgets/empty_widget.dart';
-import 'package:flutter_hive/widgets/theme_widget.dart';
 
 class CourseScreen extends StatefulWidget {
   const CourseScreen({super.key});
-
   @override
   State<CourseScreen> createState() => _CourseScreenState();
 }
 
 class _CourseScreenState extends State<CourseScreen> {
+
   @override
   void initState() {
     super.initState();

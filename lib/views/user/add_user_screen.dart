@@ -51,9 +51,9 @@ class _AddUserScreenState extends State<AddUserScreen> {
             child: Column(
           children: [
             FormFieldWidget(controller: nameController, label: "First Name"),
-            Container(height: 10,),
+            Container(height: 15,),
             FormFieldWidget(controller: familyController, label: "Last Name"),
-            Container(height: 10,),
+            Container(height: 15,),
             FormFieldWidget(controller: phoneController, label: "Phone Number"),
             const SizedBox(height: 20,),
             Row(

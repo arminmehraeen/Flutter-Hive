@@ -4,9 +4,7 @@ import 'package:flutter_hive/bloc/user/user_bloc.dart';
 import 'package:flutter_hive/models/user_model.dart';
 import 'package:flutter_hive/views/user/add_user_screen.dart';
 
-import 'package:flutter_hive/widgets/brightness_widget.dart';
 import 'package:flutter_hive/widgets/empty_widget.dart';
-import 'package:flutter_hive/widgets/theme_widget.dart';
 import 'package:flutter_hive/widgets/user_list_item_widget.dart';
 
 class UserScreen extends StatefulWidget {

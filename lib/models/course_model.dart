@@ -20,9 +20,6 @@ class CourseModel {
       createdTime: DateTime.now().toString()
   ) ;
 
-
-
-
   Map<String, dynamic> toMap() {
     return {
       'name': this.name,
