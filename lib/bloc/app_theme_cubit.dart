@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 part 'app_theme_state.dart';
 
 class AppThemeCubit extends Cubit<AppThemeState> {
-  AppThemeCubit() : super(const AppThemeState(color: Colors.green,brightness: Brightness.light));
+  AppThemeCubit() : super(const AppThemeState(color: Colors.green,brightness: Brightness.dark));
 
   void changeColor({MaterialColor? color, Brightness? brightness}) {
     if(color != null) {

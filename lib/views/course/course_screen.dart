@@ -17,40 +17,22 @@ class CourseScreen extends StatefulWidget {
 }
 
 class _CourseScreenState extends State<CourseScreen> {
-
   @override
   void initState() {
     super.initState();
     context.read<CourseBloc>().add(LoadCourses());
   }
 
-  void addAction(CourseEvent courseEvent) => context.read<CourseBloc>().add(courseEvent);
+  void addAction(CourseEvent courseEvent) =>
+      context.read<CourseBloc>().add(courseEvent);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: BlocBuilder<CourseBloc, CourseState>(
-            builder: (context, state) {
-              if (state is CourseLoaded && state.isDeletedMode) {
-                return IconButton(
-                    onPressed: () => addAction(LoadCourses()),
-                    icon: const Icon(Icons.arrow_back));
-              }
-              return Container();
-            },
-          ),
-          actions: const [
-            ThemeWidget() ,
-            BrightnessWidget()
-          ],
-          centerTitle: true,
-          title: const Text("Courses"),
-        ),
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(10.0).copyWith(bottom: 0),
+              padding: const EdgeInsets.all(5.0).copyWith(bottom: 0),
               child: Row(
                 children: [
                   Expanded(
@@ -62,7 +44,7 @@ class _CourseScreenState extends State<CourseScreen> {
                           icon: const Icon(Icons.delete_forever_outlined),
                           label: const Text("Clear All"))),
                   const SizedBox(
-                    width: 10,
+                    width: 5,
                   ),
                   Expanded(
                       child: ElevatedButton.icon(
@@ -77,62 +59,74 @@ class _CourseScreenState extends State<CourseScreen> {
             ),
             Expanded(
                 child: BlocConsumer<CourseBloc, CourseState>(
-                  builder: (context, state) {
-                    if (state is CourseLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    if (state is CourseLoaded) {
-                      List<CourseModel> courses = state.courses;
-
-                      if (courses.isEmpty) {
-                        return const EmptyWidget();
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ListView.builder(
-                              shrinkWrap: false,
-                              itemCount: courses.length,
-                              itemBuilder: (context, index) {
-                                return CourseListItemWidget(
-                                    onSelected: (course) {
-                                      courses[index] = course;
-                                      addAction(LoadCourses(courses: courses));
-                                    },
-                                    course: courses[index],
-                                    onView: (course) async {
-                                      var response = await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => AddCourseScreen(
+              builder: (context, state) {
+                if (state is CourseLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is CourseLoaded) {
+                  List<CourseModel> courses = state.courses;
+                  if (courses.isEmpty) {
+                    return const EmptyWidget();
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: ListView.builder(
+                          shrinkWrap: false,
+                          itemCount: courses.length,
+                          itemBuilder: (context, index) {
+                            return CourseListItemWidget(
+                                onSelected: (course) {
+                                  courses[index] = course;
+                                  addAction(LoadCourses(courses: courses));
+                                },
+                                course: courses[index],
+                                onView: (course) async {
+                                  var response = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AddCourseScreen(
                                                 course: course,
                                               )));
-                                      addAction(UpdateCourse(data: response, index: index));
-                                    },
-                                    onDelete: () =>
-                                        addAction(DeleteCourse(index: index)));
-                              }),
-                        );
-                      }
-                    }
-                    return Container();
-                  },
-                  listener: (context, state) {},
-                )),
+                                  addAction(UpdateCourse(
+                                      data: response, index: index));
+                                },
+                                onDelete: () =>
+                                    addAction(DeleteCourse(index: index)));
+                          }),
+                    );
+                  }
+                }
+                return Container();
+              },
+              listener: (context, state) {},
+            )),
           ],
         ),
         floatingActionButton: BlocBuilder<CourseBloc, CourseState>(
           builder: (context, state) {
             if (state is CourseLoaded && state.isDeletedMode) {
-              return FloatingActionButton(
-                  onPressed: () async {
-                    addAction(DeleteCourses(
-                        courses : state.courses
-                            .where((element) => element.selected)
-                            .toList()));
-                  },
-                  child: const Icon(Icons.delete));
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  if(state.isDeletedMode) Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: FloatingActionButton(
+                        onPressed: () => addAction(LoadCourses()) ,
+                        child: const Icon(Icons.close)),
+                  ),
+                  FloatingActionButton(
+                      onPressed: () async {
+                        addAction(DeleteCourses(
+                            courses: state.courses
+                                .where((element) => element.selected)
+                                .toList()));
+                      },
+                      child: const Icon(Icons.delete)),
+                ],
+              ) ;
             }
             return FloatingActionButton(
                 onPressed: () async {

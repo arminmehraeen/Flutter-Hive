@@ -23,34 +23,15 @@ class _UserScreenState extends State<UserScreen> {
     context.read<UserBloc>().add(LoadUsers());
   }
 
-  void addAction(UserEvent userEvent) =>
-      context.read<UserBloc>().add(userEvent);
+  void addAction(UserEvent userEvent) => context.read<UserBloc>().add(userEvent);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: BlocBuilder<UserBloc, UserState>(
-            builder: (context, state) {
-              if (state is UserLoaded && state.isDeletedMode) {
-                return IconButton(
-                    onPressed: () => addAction(LoadUsers()),
-                    icon: const Icon(Icons.arrow_back));
-              }
-              return Container();
-            },
-          ),
-          actions: const [
-             ThemeWidget() ,
-             BrightnessWidget()
-          ],
-          centerTitle: true,
-          title: const Text("Users"),
-        ),
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(10.0).copyWith(bottom: 0),
+              padding: const EdgeInsets.all(5.0).copyWith(bottom: 0),
               child: Row(
                 children: [
                   Expanded(
@@ -62,7 +43,7 @@ class _UserScreenState extends State<UserScreen> {
                           icon: const Icon(Icons.delete_forever_outlined),
                           label: const Text("Clear All"))),
                   const SizedBox(
-                    width: 10,
+                    width: 5,
                   ),
                   Expanded(
                       child: ElevatedButton.icon(
@@ -90,7 +71,7 @@ class _UserScreenState extends State<UserScreen> {
                     return const EmptyWidget();
                   } else {
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(5.0),
                       child: ListView.builder(
                           shrinkWrap: false,
                           itemCount: users.length,
@@ -126,14 +107,27 @@ class _UserScreenState extends State<UserScreen> {
         floatingActionButton: BlocBuilder<UserBloc, UserState>(
           builder: (context, state) {
             if (state is UserLoaded && state.isDeletedMode) {
-              return FloatingActionButton(
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+
+                  if(state.isDeletedMode) Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: FloatingActionButton(
+                        onPressed: () => addAction(LoadUsers()) ,
+                        child: const Icon(Icons.close)),
+                  ),
+                  FloatingActionButton(
                   onPressed: () async {
-                    addAction(DeleteUsers(
-                        users: state.users
-                            .where((element) => element.selected)
-                            .toList()));
-                  },
-                  child: const Icon(Icons.delete));
+                addAction(DeleteUsers(
+                    users: state.users
+                        .where((element) => element.selected)
+                        .toList()));
+              },
+            child: const Icon(Icons.delete)),
+                ],
+              ) ;
             }
             return FloatingActionButton(
                 onPressed: () async {
