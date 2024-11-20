@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
         length: data.length ,
         child: Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             bottom: TabBar(
               isScrollable: true,
               tabs: data.map((e) => Tab(

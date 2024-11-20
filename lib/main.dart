@@ -25,15 +25,18 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (_) => locator<AppThemeCubit>()),
         ],
         child: BlocBuilder<AppThemeCubit,AppThemeState>(builder: (context, state) {
+          ThemeData theme = ThemeData(
+              useMaterial3: false,
+              primarySwatch: state.color,
+              // colorScheme: ColorScheme.fromSeed(seedColor: state.color),
+          );
           return MaterialApp(
               title: 'Flutter Hive',
               debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                primarySwatch: state.color,
-                brightness: state.brightness
-              ),
+              theme: theme ,
+              darkTheme: theme ,
+              themeMode: state.brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light ,
               home: const HomeScreen()) ;
         },));
   }
-  
 }
